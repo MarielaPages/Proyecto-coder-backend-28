@@ -7,10 +7,13 @@ import './src/mongooseConnection/mongooseConnection.js'
 import apiRoutes from './src/routes/apiRoutes.js'
 import dotenv from 'dotenv'
 import yargs from 'yargs/yargs'
+//import path from 'path';
+//import { fileURLToPath } from 'url'; --> el de arriba y este son por si quisiera usar __dirname
+//para usar el __dirname hay que hacer un par de configs (ver https://flaviocopes.com/fix-dirname-not-defined-es-module-scope/)
 
 //console.log(yargs(process.argv)) esto devuelve objeto que tiene a argv como una prop con su valor (un objeto con los args)
 const args = yargs(process.argv.slice(2)).default({PORT:8080}).argv //variable que contiene el objeto argv que estaba en el objeto antes mencionado
-console.log(args)
+//console.log(args)
 
 //inicializo el metodo config para que dotenv pueda leer el .env y trabajar con el
 dotenv.config();

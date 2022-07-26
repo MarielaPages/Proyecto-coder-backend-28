@@ -1,8 +1,10 @@
 import { Router } from "express"
 import passport from "passport"
+import yargs from "yargs/yargs"
 
 const router = Router()
 
+//Creo funcion para chequear si el usuario esta autenticado
 function isAuth(req, res, next){
     if(req.isAuthenticated()){ //req.isAuthenticated() devuelve true o false. es true si esta la info de la persona en session porque se autentico
         next()
@@ -10,6 +12,10 @@ function isAuth(req, res, next){
         res.render('signIn')
     }
 }
+
+//creo constante args con el objeto que tendra los argumentos de entrada
+const args = yargs(process.argv).default({PORT:8080}).argv
+
 
 router.get('/signUp', (req, res) => {
     res.render('signUp')
@@ -48,6 +54,18 @@ router.get('/logout', (req, res) => {
         }
         })
     res.render('adios')
+})
+
+router.get('/info', (req, res) => {
+    res.render('info', {
+        argumentosEntrada: args,
+        nombrePlataformaSO: process.platform,
+        versionNode: process.version,
+        memoriaRservada: process.memoryUsage.rss(),
+        execPath: process.execPath,
+        processId: process.pid,
+        projectFile: process.cwd()
+    })
 })
 
 
