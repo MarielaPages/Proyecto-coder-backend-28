@@ -40,6 +40,7 @@ app.use(passport.session())//para que session funcione con passport
 app.use('/', apiRoutes)
 
 
+
 //inicio server
 const PORT = args.PORT
 const server = app.listen(PORT, () => {

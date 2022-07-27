@@ -1,6 +1,7 @@
 import { Router } from "express"
 import passport from "passport"
 import yargs from "yargs/yargs"
+import { fork } from 'child_process'
 
 const router = Router()
 
@@ -68,6 +69,16 @@ router.get('/info', (req, res) => {
     })
 })
 
+
+router.get('/api/randoms', (req, res)=>{
+    const { cant } = req.query
+    const cantNumeros = cant || 100000000 //si el 1ro no existe, toma el 2do
+    const forky = fork('./src/funRandom/funRandom.js') //la ruta se pone como si la buscara desde sever porque desde ahi abre esta ruta con el .use
+    forky.send(cantNumeros) //le envio la catidad como mensaje a la ruta que le puse a fork
+    forky.on('message', nrosRandom => { //recibo la rsta enviada desde la ruta que le puse a fork
+        res.send(nrosRandom)
+    })
+})
 
 
 export default router 
